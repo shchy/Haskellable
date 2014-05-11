@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A8E56399-C55D-486C-B6A9-B15F82FF3F70}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Haskellable</RootNamespace>
+    <AssemblyName>Haskellable</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Code\CaseOf\CaseOf.cs" />
+    <Compile Include="Code\CaseOf\CaseOfExtension.cs" />
+    <Compile Include="Code\Extensions\EnumerableExtension.cs" />
+    <Compile Include="Code\Extensions\FuncFactory.cs" />
+    <Compile Include="Code\Guards\Guards.cs" />
+    <Compile Include="Code\Guards\GuardsExtension.cs" />
+    <Compile Include="Code\HeadTailList\HeadTailList.cs" />
+    <Compile Include="Code\HeadTailList\HeadTailListExtension.cs" />
+    <Compile Include="Code\Join\JoinContext.cs" />
+    <Compile Include="Code\Join\JoinExtension.cs" />
+    <Compile Include="Code\Monads\Either\Either.cs" />
+    <Compile Include="Code\Monads\Either\EitherExtension.cs" />
+    <Compile Include="Code\Monads\Maybe\IMaybe.cs" />
+    <Compile Include="Code\Monads\Maybe\Just.cs" />
+    <Compile Include="Code\Monads\Maybe\MaybeExtension.cs" />
+    <Compile Include="Code\Monads\Maybe\MaybeLinqExtension.cs" />
+    <Compile Include="Code\Monads\Maybe\Nothing.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
