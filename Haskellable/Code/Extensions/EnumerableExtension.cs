@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Haskellable.Code.HeadTailList;
+using Haskellable.Code.Monads.Maybe;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +29,17 @@ namespace System
                     }
                     , (head, tailResult) => head.Concat(tailResult))
                 .Select(resultSelector);
+        }
+
+        public static IMaybe<T> FirstOrMaybe<T>(
+            this IEnumerable<T> @this)
+        {
+            return
+                @this
+                .ToHeadTailList()
+                .ToCaseOf()
+                .Match((EmptyList<T> _) => Maybe.Nothing<T>())
+                .Return(x => x.Head.ToMaybe());
         }
     }
 }
