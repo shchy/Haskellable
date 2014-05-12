@@ -10,22 +10,20 @@ namespace System
 {
     public static class CaseOfExtension
     {
-        public static CaseOfSeed ToCaseOf<TValue>(this IMaybe<TValue> @this)
-        {
-            var just =
-                from v in @this
-                select new CaseOfSeed(v);
+        //public static CaseOfSeed<TValue> ToCaseOf<TValue>(this IMaybe<TValue> @this)
+        //{
+        //    var just =
+        //        from v in @this
+        //        select new CaseOfSeed<TValue>(v);
+        //    return
+        //        just
+        //        .Return(()=>new CaseOfSeed<TValue>(default(TValue)));
+        //}
 
-            return
-                just
-                .Return(()=>new CaseOfSeed(Maybe.Nothing<TValue>()));
-                
-        }
-
-        public static CaseOfSeed ToCaseOf(this object @this)
+        public static CaseOfSeed<TValue> ToCaseOf<TValue>(this TValue @this)
         {   
             return
-                new CaseOfSeed(@this);
+                new CaseOfSeed<TValue>(@this);
         }
     }
 }

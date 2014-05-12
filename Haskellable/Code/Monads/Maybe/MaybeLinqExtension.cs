@@ -57,8 +57,7 @@ namespace System
             {
                 return Maybe.Nothing<TValue>();
             }
-
-            return just.Value.Select(x=>x);;
+            return just.Value;
         }
 
         public static IMaybe<TResult> SelectMany<TSource, TSelected, TResult>(

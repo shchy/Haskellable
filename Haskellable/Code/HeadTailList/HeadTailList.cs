@@ -6,63 +6,6 @@ using System.Threading.Tasks;
 
 namespace Haskellable.Code.HeadTailList
 {
-    public interface IHeadTailList<T> : IEnumerable<T>
-    {
-        T Head { get; }
-        IHeadTailList<T> Tail { get; }
-    }
-
-    public class EmptyList<T> : IHeadTailList<T>
-    {
-        public T Head
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public IHeadTailList<T> Tail
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return Enumerable.Empty<T>().GetEnumerator();
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return Enumerable.Empty<T>().GetEnumerator();
-        }
-    }
-
-    public class SingleList<T> : IHeadTailList<T>
-    {
-        private IEnumerable<T> list;
-        public SingleList(T head)
-        {
-            this.Head = head;
-            this.list = new[] { this.Head }; 
-        }
-
-
-        public T Head { get; set; }
-
-        public IHeadTailList<T> Tail
-        {
-            get { return Enumerable.Empty<T>().ToHeadTailList(); }
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return this.list.GetEnumerator();
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.list.GetEnumerator();
-        }
-    }
-
     public class HeadTailList<T> : IHeadTailList<T>
     {
         private Lazy<T> lazyHead;
@@ -100,6 +43,11 @@ namespace Haskellable.Code.HeadTailList
         {
             return
                 this.lazyList.Value.GetEnumerator();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("List head:{0}", this.Head);
         }
     }
 }

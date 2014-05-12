@@ -33,21 +33,4 @@ namespace Haskellable.Code.Monads.Maybe
             get { return true; }
         }
     }
-
-    public static class Maybe
-    {
-        public static IMaybe<T> New<T>(T value)
-        {
-            if (value == null)
-            {
-                return new Nothing<T>();
-            }
-            return new Just<T>(value);
-        }
-
-        public static IMaybe<T> Nothing<T>()
-        {
-            return new Nothing<T>();
-        }
-    }
 }

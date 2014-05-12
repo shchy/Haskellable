@@ -7,40 +7,40 @@ using System.Threading.Tasks;
 
 namespace Haskellable.Code.CaseOf
 {
-    public class CaseOfSeed
+    public class CaseOfSeed<TValue> 
 	{
-        private object value;
-		public CaseOfSeed (object value)
+        private TValue value;
+        public CaseOfSeed(TValue value)
 	    {
             this.value = value;
 	    }
 
-        public CaseOf<TReturn> Match<TValue, TReturn>(Func<TValue, TReturn> matchCase)
+        public CaseOf<TValue, TReturn> Match<TNewValue, TReturn>(Func<TNewValue, TReturn> matchCase)
         {
             return
-                new CaseOf<TReturn>(this.value)
+                new CaseOf<TValue, TReturn>(this.value)
                 .Match(matchCase);
         }
 	}
 
-    public class CaseOf<TReturn>
+    public class CaseOf<TValue, TReturn> 
     {
-        private object value;
+        private TValue value;
         private IMaybe<TReturn> returnValue;
 
-        public CaseOf(object value)
+        public CaseOf(TValue value)
         {
             this.value = value;
             this.returnValue = Maybe.Nothing<TReturn>();
         }
 
-        public CaseOf<TReturn> Match<TValue>(Func<TValue, TReturn> selector)
+        public CaseOf<TValue, TReturn> Match<TNewValue>(Func<TNewValue, TReturn> selector)
         {
             this.returnValue
                 .Or(() =>
                 {
                     var query =
-                        from v in this.value.ToMaybeAs<TValue>()
+                        from v in this.value.ToMaybeAs<TNewValue>()
                         select selector(v);
                     this.returnValue = query;
                 });
@@ -48,11 +48,11 @@ namespace Haskellable.Code.CaseOf
             return this;
         }
 
-        public TReturn Return(Func<TReturn> otherwise)
+        public TReturn Return(Func<TValue, TReturn> otherwise)
         {
             return
                 this.returnValue
-                .Return(otherwise);
+                .Return(()=> otherwise(this.value));
         }
 
         public TReturn Return(TReturn otherwise)

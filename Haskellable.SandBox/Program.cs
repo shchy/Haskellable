@@ -13,6 +13,71 @@ namespace Haskellable.SandBox
     {
         static void Main(string[] args)
         {
+            var ano = new
+            {
+                suji = 9,
+                moji = 'q'
+            };
+
+            var a1 =
+                from a in ano.ToMaybe()
+                where a.suji < 5
+                select a;
+
+            var a2 =
+                ano.suji
+                .ToCaseOf()
+                .Match((int x) => x)
+                .Match((string x) => 0)
+                .Return(_ => int.MaxValue);
+
+            var a3 =
+                ano
+                .ToGuards()
+                .Where(a => new { a.suji, a.moji, other = a.suji + a.moji })
+                .When(
+                    a => char.IsWhiteSpace(a.moji)
+                    , a => '*')
+                .When(
+                    a => a.suji == 0
+                    , a => '8')
+                .Return(a => (char)a.other);
+
+            var a4 =
+                ano
+                .ToLeft()
+                .ToEither<int>()
+                .OnLeft(a => Console.WriteLine(a))
+                .OnRight(right => Console.WriteLine(right));
+
+            var a5 =
+                ano.suji
+                .ToLeft().ToEither<double>()
+                .ToCaseOf()
+                .Match((IRight<double> right) => right.ToString())
+                .Match((ILeft<int> left) => left.ToString())
+                .Return(_ => _.ToString());
+
+            var a6 =
+                Fn.New(() => { throw new Exception(); return 1; })
+                .ToExceptional()
+                .OnRight(Console.WriteLine)
+                .OnLeft(ex =>
+                    ex.ToCaseOf()
+                    .Match((ArgumentException e) => "arg")
+                    .Match((SystemException e) => "sys")
+                    .Return("err"));
+
+            var a7 =
+                Fn.New(() => { throw new ArgumentException(); return 1; })
+                .ToExceptional()
+                .ToCaseOf((ArgumentException e) => "arg")
+                .Match((SystemException e) => "sys")
+                .Match((int right) => "right")
+                .Return("err");
+
+
+
             var obj = new MyClass{ Int = 9, Moji = "unko" };
 
             var intMaybe =
@@ -52,7 +117,7 @@ namespace Haskellable.SandBox
                 "".ToCaseOf()
                 .Match((MyClass a) => a.Int)
                 .Match((int a) => a)
-                .Return(() => 99);
+                .Return(_ => 99);
 
             var array = new[] { 9, 8, 7, 6, 5, 4, 3, 2, 1 };
             var aaa = array.ToHeadTailList()
@@ -104,9 +169,9 @@ namespace Haskellable.SandBox
 
         private static IEither<int, string> GetLeft()
         {
-            return 9.ToLeft<int, string>();
+            var a = 9.ToLeft();
+            return a.ToEither<string>();
         }
-
     }
 
     class MyClass

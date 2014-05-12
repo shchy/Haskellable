@@ -26,14 +26,7 @@ namespace System
 
     public static class MaybeExtension
     {
-        public static IMaybe<TValue> ToMaybe<TValue>(
-            this IMaybe<TValue> @this)
-        {
-            return @this;
-        }
-
-        public static IMaybe<TValue> ToMaybe<TValue>(
-            this TValue @this)
+        public static IMaybe<TValue> ToMaybe<TValue>(this TValue @this)
         {
             if (@this == null)
             {
