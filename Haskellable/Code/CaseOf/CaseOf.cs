@@ -37,16 +37,20 @@ namespace Haskellable.Code.CaseOf
         public CaseOf<TValue, TReturn> Match<TNewValue>(Func<TNewValue, TReturn> selector)
         {
             this.returnValue
-                .Or(() =>
+                .Or(
+                () =>
                 {
-                    var query =
-                        from v in this.value.ToMaybeAs<TNewValue>()
-                        select selector(v);
-                    this.returnValue = query;
+                    this.value.ToMaybeAs<TNewValue>()
+                        .On(
+                        v =>
+                        {
+                            this.returnValue = selector(v).ToMaybe();
+                        });
                 });
 
             return this;
         }
+        
 
         public TReturn Return(Func<TValue, TReturn> otherwise)
         {

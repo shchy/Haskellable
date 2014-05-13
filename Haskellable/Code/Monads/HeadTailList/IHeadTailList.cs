@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Haskellable.Code.HeadTailList
+namespace Haskellable.Code.Monads.HeadTailList
 {
     public interface IHeadTailList<T> : IEnumerable<T>
     {

@@ -1,4 +1,4 @@
-﻿using Haskellable.Code.HeadTailList;
+﻿using Haskellable.Code.Monads.HeadTailList;
 using Haskellable.Code.Monads.Maybe;
 using System;
 using System.Collections.Generic;
@@ -35,11 +35,15 @@ namespace System
             this IEnumerable<T> @this)
         {
             return
-                @this
-                .ToHeadTailList()
-                .ToCaseOf()
-                .Match((EmptyList<T> _) => Maybe.Nothing<T>())
-                .Return(x => x.Head.ToMaybe());
+                @this.FirstOrDefault().ToMaybe();
+        }
+
+        public static IMaybe<T> FirstOrMaybe<T>
+            (this IEnumerable<T> @this
+            , Func<T,bool> predicate)
+        {
+            return
+                @this.FirstOrDefault(predicate).ToMaybe();
         }
     }
 }

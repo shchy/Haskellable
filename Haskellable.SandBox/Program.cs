@@ -1,4 +1,4 @@
-﻿using Haskellable.Code.HeadTailList;
+﻿using Haskellable.Code.Monads.HeadTailList;
 using Haskellable.Code.Monads.Either;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace Haskellable.SandBox
 
             var a1 =
                 from a in ano.ToMaybe()
-                where a.suji < 5
+                where a.suji < 10
                 select a;
 
             var a2 =
@@ -75,6 +75,29 @@ namespace Haskellable.SandBox
                 .Match((SystemException e) => "sys")
                 .Match((int right) => "right")
                 .Return("err");
+
+            var a8 =
+                from ei in ano.suji.ToLeft().ToEither<string>()
+                select ei + "unko";
+
+            var a9 =
+                from ei in ano.moji.ToRight().ToEither<object>()
+                select ei + "unko";
+
+
+            var a10 =
+                from m in 1.ToMaybe()
+                where false
+                select m;
+
+            var a11 =
+                from m in 2.ToMaybe()
+                where false
+                select m;
+
+            var a12 =
+                a10.Concat(a11).FirstOrDefault();
+
 
 
 
@@ -179,6 +202,4 @@ namespace Haskellable.SandBox
         public int Int { get; set; }
         public string Moji { get; set; }
     }
-
-
 }

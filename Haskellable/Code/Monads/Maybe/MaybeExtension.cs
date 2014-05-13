@@ -22,6 +22,32 @@ namespace System
         {
             return new Nothing<T>();
         }
+
+        public static IEnumerable<T> Concat<T>(this IMaybe<T> @this, IMaybe<T> second)
+        {
+            if (@this.IsSomething)
+	        {
+                yield return @this.Return();
+	        }
+
+            if (second.IsSomething)
+	        {
+                yield return second.Return();
+	        }
+        }
+
+        public static IEnumerable<T> Concat<T>(this IEnumerable<T> @this, IMaybe<T> second)
+        {
+            foreach (var item in @this)
+            {
+                yield return item;
+            }
+
+            if (second.IsSomething)
+            {
+                yield return second.Return();
+            }
+        }
     }
 
     public static class MaybeExtension

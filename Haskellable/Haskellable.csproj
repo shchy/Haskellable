@@ -46,14 +46,15 @@
     <Compile Include="Code\Extensions\FuncFactory.cs" />
     <Compile Include="Code\Guards\Guards.cs" />
     <Compile Include="Code\Guards\GuardsExtension.cs" />
-    <Compile Include="Code\HeadTailList\EmptyList.cs" />
-    <Compile Include="Code\HeadTailList\HeadTailList.cs" />
-    <Compile Include="Code\HeadTailList\HeadTailListExtension.cs" />
-    <Compile Include="Code\HeadTailList\IHeadTailList.cs" />
-    <Compile Include="Code\HeadTailList\SingleList.cs" />
+    <Compile Include="Code\Monads\HeadTailList\EmptyList.cs" />
+    <Compile Include="Code\Monads\HeadTailList\HeadTailList.cs" />
+    <Compile Include="Code\Monads\HeadTailList\HeadTailListExtension.cs" />
+    <Compile Include="Code\Monads\HeadTailList\IHeadTailList.cs" />
+    <Compile Include="Code\Monads\HeadTailList\SingleList.cs" />
     <Compile Include="Code\Join\JoinContext.cs" />
     <Compile Include="Code\Join\JoinExtension.cs" />
     <Compile Include="Code\Monads\Either\EitherExtension.cs" />
+    <Compile Include="Code\Monads\Either\EitherFunctor.cs" />
     <Compile Include="Code\Monads\Either\ExceptionalEitherLeft.cs" />
     <Compile Include="Code\Monads\Either\ExceptionalEitherRight.cs" />
     <Compile Include="Code\Monads\Either\IEither.cs" />
@@ -65,7 +66,7 @@
     <Compile Include="Code\Monads\Maybe\IMaybe.cs" />
     <Compile Include="Code\Monads\Maybe\Just.cs" />
     <Compile Include="Code\Monads\Maybe\MaybeExtension.cs" />
-    <Compile Include="Code\Monads\Maybe\MaybeLinqExtension.cs" />
+    <Compile Include="Code\Monads\Maybe\MaybeFunctor.cs" />
     <Compile Include="Code\Monads\Maybe\Nothing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

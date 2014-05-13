@@ -7,34 +7,33 @@ using System.Threading.Tasks;
 
 namespace System
 {
-    public static class MaybeLinqExtension
+    public static class MaybeFunctor
     {
         public static IMaybe<TResult> Select<TValue, TResult>(
             this IMaybe<TValue> @this
             , Func<TValue, TResult> selector)
         {
-            var just = @this as Just<TValue>;
-            if (just != null)
-            {
-                return Maybe.New(selector(just.Value));
-            }
-            return Maybe.Nothing<TResult>();
+            return 
+                @this.ToCaseOf()
+                .Match((Just<TValue> just) => Maybe.New(selector(just.Value)))
+                .Return(_ => Maybe.Nothing<TResult>());
         }
 
         public static IMaybe<TValue> Where<TValue>(
             this IMaybe<TValue> @this
             , Func<TValue, bool> predicate)
         {
-            var just = @this as Just<TValue>;
-            if (just != null && predicate(just.Value))
-            {
-                return just;
-            }
-            else
-            {
-                return Maybe.Nothing<TValue>();
-            }
+            return
+                @this.ToGuards()
+                .When(
+                    m => m.ToCaseOf()
+                        .Match((Just<TValue> just)=>predicate( just.Value))
+                        .Return(false)
+                    , m => m)
+                .Return(_=>Maybe.Nothing<TValue>());
         }
+
+
 
         public static IMaybe<TResult> SelectMany<TValue, TResult>(
             this IMaybe<TValue> @this,
