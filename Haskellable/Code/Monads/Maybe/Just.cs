@@ -20,7 +20,7 @@ namespace Haskellable.Code.Monads.Maybe
 
         public override string ToString()
         {
-            return string.Format("Just {0}", this.Value);
+            return string.Format("Just {0} {1}", typeof(T).Name, this.Value);
         }
 
         public bool IsNothing

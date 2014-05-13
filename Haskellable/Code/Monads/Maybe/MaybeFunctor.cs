@@ -15,8 +15,8 @@ namespace System
         {
             return 
                 @this.ToCaseOf()
-                .Match((Just<TValue> just) => Maybe.New(selector(just.Value)))
-                .Return(_ => Maybe.Nothing<TResult>());
+                .Match((Just<TValue> just) => new Just<TResult>(selector(just.Value)) as IMaybe<TResult>)
+                .Return(_ => new Nothing<TResult>());
         }
 
         public static IMaybe<TValue> Where<TValue>(
@@ -30,7 +30,7 @@ namespace System
                         .Match((Just<TValue> just)=>predicate( just.Value))
                         .Return(false)
                     , m => m)
-                .Return(_=>Maybe.Nothing<TValue>());
+                .Return(_=>new Nothing<TValue>());
         }
 
 
@@ -45,7 +45,7 @@ namespace System
                 return selector(just.Value);
             }
 
-            return Maybe.Nothing<TResult>();
+            return new Nothing<TResult>();
         }
 
         public static IMaybe<TValue> SelectMany<TValue>(
@@ -54,7 +54,7 @@ namespace System
             var just = @this as Just<IMaybe<TValue>>;
             if (just == null)
             {
-                return Maybe.Nothing<TValue>();
+                return new Nothing<TValue>();
             }
             return just.Value;
         }
@@ -68,13 +68,13 @@ namespace System
 
             if (just == null)
             {
-                return Maybe.Nothing<TResult>();
+                return new Nothing<TResult>();
             }
 
             var selectedJust = maybeSelector(just.Value) as Just<TSelected>;
             if (selectedJust == null)
             {
-                return Maybe.Nothing<TResult>();
+                return new Nothing<TResult>();
             }
 
             return resultSelector(just.Value, selectedJust.Value).ToMaybe();

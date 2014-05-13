@@ -39,7 +39,7 @@ namespace Haskellable.Code.Guards
         public Guards(TValue tValue)
         {
             this.tValue = tValue;
-            this.returnValue = Maybe.Nothing<TReturn>();
+            this.returnValue = new Nothing<TReturn>();
         }
 
         public Guards<TValue, TReturn> When(

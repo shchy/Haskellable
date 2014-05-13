@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Haskellable.Code.Monads.Maybe;
 
 
 namespace Haskellable.SandBox
@@ -99,7 +100,17 @@ namespace Haskellable.SandBox
                 a10.Concat(a11).FirstOrDefault();
 
 
+            var a13Exists =
+                Fn.New<IMaybe<int>, Func<int, bool>, IMaybe<bool>>((m, predicate) => MaybeFunctor.Select(m, x => predicate(x)));
 
+            var a14 =
+                Fn.New<int, string>(x => x.ToString()).ToMaybe().Apply();
+            var a15 = a14(5.ToMaybe());
+
+
+            var a16 = Fn.New<int, int, int>( (x, y) => x + y);
+            var a17 = a16.ToMaybe().Apply();
+            
 
             var obj = new MyClass{ Int = 9, Moji = "unko" };
 
@@ -175,8 +186,8 @@ namespace Haskellable.SandBox
             var query7 =
                 either
                 .ToCaseOf()
-                .Match((ILeft<int> l) => Fn.New(() => Console.WriteLine(l)))
-                .Match((IRight<string> r) => Fn.New(() => Console.WriteLine(r)))
+                .Match((ILeft<int> l) => Fn.Act(() => Console.WriteLine(l)))
+                .Match((IRight<string> r) => Fn.Act(() => Console.WriteLine(r)))
                 .Return(() => Console.WriteLine("error"));
             query7();
 

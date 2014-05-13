@@ -31,7 +31,7 @@ namespace Haskellable.Code.CaseOf
         public CaseOf(TValue value)
         {
             this.value = value;
-            this.returnValue = Maybe.Nothing<TReturn>();
+            this.returnValue = new Nothing<TReturn>();
         }
 
         public CaseOf<TValue, TReturn> Match<TNewValue>(Func<TNewValue, TReturn> selector)

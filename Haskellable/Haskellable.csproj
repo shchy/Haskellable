@@ -53,7 +53,7 @@
     <Compile Include="Code\Monads\HeadTailList\SingleList.cs" />
     <Compile Include="Code\Join\JoinContext.cs" />
     <Compile Include="Code\Join\JoinExtension.cs" />
-    <Compile Include="Code\Monads\Either\EitherExtension.cs" />
+    <Compile Include="Code\Monads\Either\EitherApplicative.cs" />
     <Compile Include="Code\Monads\Either\EitherFunctor.cs" />
     <Compile Include="Code\Monads\Either\ExceptionalEitherLeft.cs" />
     <Compile Include="Code\Monads\Either\ExceptionalEitherRight.cs" />
@@ -65,7 +65,7 @@
     <Compile Include="Code\Monads\Either\Right.cs" />
     <Compile Include="Code\Monads\Maybe\IMaybe.cs" />
     <Compile Include="Code\Monads\Maybe\Just.cs" />
-    <Compile Include="Code\Monads\Maybe\MaybeExtension.cs" />
+    <Compile Include="Code\Monads\Maybe\MaybeApplicative.cs" />
     <Compile Include="Code\Monads\Maybe\MaybeFunctor.cs" />
     <Compile Include="Code\Monads\Maybe\Nothing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

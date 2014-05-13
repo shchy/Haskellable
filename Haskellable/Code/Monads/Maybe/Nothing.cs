@@ -10,7 +10,7 @@ namespace Haskellable.Code.Monads.Maybe
     {
         public override string ToString()
         {
-            return string.Format("Nothing {0}", typeof(T));
+            return string.Format("Nothing {0}", typeof(T).Name);
         }
 
         public bool IsNothing

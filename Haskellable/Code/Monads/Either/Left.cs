@@ -28,7 +28,7 @@ namespace Haskellable.Code.Monads.Either
 
         public override string ToString()
         {
-            return string.Format("Left {0}", this.Value);
+            return string.Format("Left {0} {1}", typeof(T).Name, this.Value);
         }
 
         public IEither<T, TRight> ToEither<TRight>()
