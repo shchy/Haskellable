@@ -44,5 +44,10 @@ namespace Haskellable.Code.Monads.Either
             : base(value)
         {
         }
+
+        public Functor.IFunctor<TNew> FMap<TNew>(Func<TRight, TNew> selector)
+        {
+            return new EitherRight<TLeft, TNew>(selector(this.Value));
+        }
     }
 }

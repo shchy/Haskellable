@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Haskellable.Code.Functor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,11 @@ namespace Haskellable.Code.Monads.Maybe
         public bool IsSomething
         {
             get { return true; }
+        }
+
+        public IFunctor<TNew> FMap<TNew>(Func<T, TNew> selector)
+        {
+            return new Just<TNew>(selector(this.Value));
         }
     }
 }

@@ -44,6 +44,8 @@
     <Compile Include="Code\CaseOf\CaseOfExtension.cs" />
     <Compile Include="Code\Extensions\EnumerableExtension.cs" />
     <Compile Include="Code\Extensions\FuncFactory.cs" />
+    <Compile Include="Code\Functor\IApplicativeFunctor.cs" />
+    <Compile Include="Code\Functor\IFunctor.cs" />
     <Compile Include="Code\Guards\Guards.cs" />
     <Compile Include="Code\Guards\GuardsExtension.cs" />
     <Compile Include="Code\Monads\HeadTailList\EmptyList.cs" />
@@ -53,8 +55,8 @@
     <Compile Include="Code\Monads\HeadTailList\SingleList.cs" />
     <Compile Include="Code\Join\JoinContext.cs" />
     <Compile Include="Code\Join\JoinExtension.cs" />
-    <Compile Include="Code\Monads\Either\EitherApplicative.cs" />
-    <Compile Include="Code\Monads\Either\EitherFunctor.cs" />
+    <Compile Include="Code\Functor\EitherApplicative.cs" />
+    <Compile Include="Code\Functor\EitherFunctor.cs" />
     <Compile Include="Code\Monads\Either\ExceptionalEitherLeft.cs" />
     <Compile Include="Code\Monads\Either\ExceptionalEitherRight.cs" />
     <Compile Include="Code\Monads\Either\IEither.cs" />
@@ -65,11 +67,12 @@
     <Compile Include="Code\Monads\Either\Right.cs" />
     <Compile Include="Code\Monads\Maybe\IMaybe.cs" />
     <Compile Include="Code\Monads\Maybe\Just.cs" />
-    <Compile Include="Code\Monads\Maybe\MaybeApplicative.cs" />
-    <Compile Include="Code\Monads\Maybe\MaybeFunctor.cs" />
+    <Compile Include="Code\Functor\MaybeApplicative.cs" />
+    <Compile Include="Code\Functor\MaybeFunctor.cs" />
     <Compile Include="Code\Monads\Maybe\Nothing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

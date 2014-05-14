@@ -104,13 +104,34 @@ namespace Haskellable.SandBox
                 Fn.New<IMaybe<int>, Func<int, bool>, IMaybe<bool>>((m, predicate) => MaybeFunctor.Select(m, x => predicate(x)));
 
             var a14 =
-                Fn.New<int, string>(x => x.ToString()).ToMaybe().Apply();
-            var a15 = a14(5.ToMaybe());
+                Fn.New((int x) => x.ToString()).ApplyMaybe(5.ToMaybe());
 
+            var mf = Fn.New((int x, int y) => (x + y).ToString())
+                        .ApplyMaybe(1.ToMaybe())
+                        .ApplyMaybe(4.ToMaybe());
 
-            var a16 = Fn.New<int, int, int>( (x, y) => x + y);
-            var a17 = a16.ToMaybe().Apply();
-            
+            var a16 = Fn.New<int, int, int>((x, y) => x + y);
+            var a17 = a16.ApplyMaybe( 5.ToMaybe());
+            var a18 = a17.ApplyMaybe( 6.ToMaybe());
+            var a19 = a18
+                        .Apply((int x, string y) => x + y)
+                        .ApplyMaybe("unko".ToMaybe());
+
+            var a20 =
+                from a in ano.ToMaybe()
+                from b in a.moji.ToMaybe()
+                from c in 3.ToMaybe()
+                select a.moji + b + c;
+
+            var a21 =
+                from a in ano.ToMaybe()
+                from b in 1.ToMaybe()
+                select a.suji + b;
+
+            var a22 = 1.ToMaybe().Select(x => x.ToMaybe());
+            var a23 = a22.SelectMany();
+            var a24 = a22.SelectMany(x => 1);
+            var a25 = 1.ToMaybe().SelectMany(x => x.ToMaybe());
 
             var obj = new MyClass{ Int = 9, Moji = "unko" };
 
