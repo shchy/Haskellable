@@ -6,19 +6,108 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Haskellable.Code.Monads.Maybe;
+using Haskellable.Code.Monoid;
 
 
 namespace Haskellable.SandBox
 {
+
+    public class Any : Monoid<bool>
+    {
+        public Any(bool v) : base(v)
+        {
+
+        }
+
+        public override IMonoid<Monoid<bool>, bool> Empty()
+        {
+            return new Any(false);
+        }
+
+        public override IMonoid<Monoid<bool>, bool> Append(IMonoid<Monoid<bool>, bool> item)
+        {
+            return new Any( this.Value || item.Value );
+        }
+    }
+
+    class First<T> : Monoid<IMaybe<T>>
+    {
+        public First() : base()
+        {
+        }
+
+        public First(IMaybe<T> v) : base(v)
+        {
+        }
+
+        public override IMonoid<Monoid<IMaybe<T>>, IMaybe<T>> Empty()
+        {
+            return new First<T>(new Nothing<T>());
+        }
+
+        public override IMonoid<Monoid<IMaybe<T>>, IMaybe<T>> Append(IMonoid<Monoid<IMaybe<T>>, IMaybe<T>> item)
+        {
+            return
+                new First<T>(this.Value.Concat(item.Value).FirstOrMaybe());
+        }
+    }
+
+    class Lope : Monoid<IMaybe<Tuple<int,int>>>
+    {
+        public Lope() : base()
+        {
+        }
+
+        public Lope(IMaybe<Tuple<int,int>> v) : base(v)
+        {
+        }
+
+        public override IMonoid<Monoid<IMaybe<Tuple<int, int>>>, IMaybe<Tuple<int, int>>> Empty()
+        {
+            return new Lope(new Nothing<Tuple<int, int>>());
+        }
+
+        public override IMonoid<Monoid<IMaybe<Tuple<int, int>>>, IMaybe<Tuple<int, int>>> Append(IMonoid<Monoid<IMaybe<Tuple<int, int>>>, IMaybe<Tuple<int, int>>> item)
+        {
+            var query =
+                from x in this.Value
+                from y in item.Value
+                let l = Tuple.Create(x.Item1 + y.Item1, x.Item2 + y.Item2)
+                where Math.Abs(l.Item1 - l.Item2) < 5
+                select l;
+            return new Lope(query);
+        }
+    }
+
+
+
+
+
     class Program
     {
         static void Main(string[] args)
         {
+            var bools = new[]{false, false, false,false,false};
+            var anys = bools.Select(x => new Any(x));
+
+            var any = new Any(false);
+            var isAny = any.Concat(anys);
+
+
+            var may = new First<bool>();
+            var may2 = new First<bool>(true.ToMaybe());
+            var may3 = may.Append(may2);
+
+            var lope = new Lope(Tuple.Create(0,0).ToMaybe());
+            var lope2 = lope.Append(new Lope(Tuple.Create(10, 0).ToMaybe()));    
+
             var ano = new
             {
                 suji = 9,
                 moji = 'q'
             };
+
+            ano.ToMaybe().Select(x => x.suji.ToString());
 
             var a1 =
                 from a in ano.ToMaybe()
