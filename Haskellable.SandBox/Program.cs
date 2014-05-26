@@ -296,12 +296,19 @@ namespace Haskellable.SandBox
             var query7 =
                 either
                 .ToCaseOf()
-                .Match((ILeft<int> l) => Fn.Act(() => Console.WriteLine(l)))
-                .Match((IRight<string> r) => Fn.Act(() => Console.WriteLine(r)))
+                .Match((ILeft<int> l) => Act.New(() => Console.WriteLine(l)))
+                .Match((IRight<string> r) => Act.New(() => Console.WriteLine(r)))
                 .Return(() => Console.WriteLine("error"));
             query7();
 
             Console.WriteLine(query4);
+
+
+            var doubleMe = Fn.New((double x) => x.ToGuards()
+                                                .Where(a => new { dbl = a * 2, a })
+                                                .When(a => a.dbl > 100, _ => 100.0)
+                                                .Return(a => a.dbl));
+
 
             Console.ReadLine();
         }
