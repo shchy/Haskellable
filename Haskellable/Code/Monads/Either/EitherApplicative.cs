@@ -58,6 +58,18 @@ namespace System
             return @this;
         }
 
+        public static TRight Return<TLeft,TRight>(
+            this IEither<TLeft, TRight> @this
+            , Func<TRight> getDefaultValue)
+        {
+            var right = @this as EitherRight<TLeft, TRight>;
+            if (right == null)
+            {
+                return getDefaultValue();
+            }
+            return right.Value;
+        }
+
         public static IExceptionalEither<TValue> ToExceptional<TValue>(this Func<TValue> @this)
         {
             try
@@ -82,5 +94,45 @@ namespace System
                 .ToCaseOf()
                 .Match(func);
         }
+
+        public static IEither<TLeft, TRight> SelectMany<TLeft, TRight>(
+             this IEither<TLeft, IEither<TLeft,TRight>> @this)
+        {
+            var left = Fn.New<EitherLeft<TLeft,IEither<TLeft,TRight>>
+                                , IEither<TLeft,TRight>>(x => x.Value.ToLeft<TLeft,TRight>());
+            var right = Fn.New<EitherRight<TLeft,IEither<TLeft,TRight>>
+                                , IEither<TLeft,TRight>>(x => x.Value);
+            return 
+                @this.ToCaseOf()
+                .Match(left)
+                .Match(right)
+                .Return(default(TLeft).ToLeft<TLeft,TRight>());
+        }
+
+        public static Func<IEither<TLeft, TSelected>, IEither<TLeft, TNewRight>> Apply<TLeft, TRight, TSelected, TNewRight>(
+            this IEither<TLeft, TRight> @this
+            , Func<TRight, TSelected, TNewRight> selector)
+        {
+            return
+                (IEither<TLeft,TSelected> f2) =>
+                    @this.Select(t1 =>
+                        f2.Select(t2 =>
+                            selector(t1, t2)))
+                                .SelectMany();
+        }
+
+        public static IEither<TLeft, TResult> SelectMany<TLeft, TRight, TSelected, TResult>(
+            this IEither<TLeft, TRight> @this,
+            Func<TRight, IEither<TLeft, TSelected>> maybeSelector,
+            Func<TRight, TSelected, TResult> resultSelector)
+        {
+            var apply = @this.Apply(resultSelector);
+            var second = @this.Select(maybeSelector).SelectMany();
+            return apply(second);
+        }
+
+
+
+        public static object IEitherLeft { get; set; }
     }
 }

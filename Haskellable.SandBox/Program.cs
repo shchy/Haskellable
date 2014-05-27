@@ -87,6 +87,12 @@ namespace Haskellable.SandBox
     {
         static void Main(string[] args)
         {
+            var eitherTest =
+                from a in 1.ToRight<string, int>()
+                from b in "un".ToRight<string, string>()
+                select DateTime.Now;
+
+
             var bools = new[]{false, false, false,false,false};
             var anys = bools.Select(x => new Any(x));
 
