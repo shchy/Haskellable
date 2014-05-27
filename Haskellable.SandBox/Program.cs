@@ -93,6 +93,12 @@ namespace Haskellable.SandBox
                 select DateTime.Now;
 
 
+            var bai = Fn.New((int x) => x * 2);
+            var bai3 = bai
+                        .Join(bai)
+                        .Join(bai);
+            Console.WriteLine(bai3(2));
+
             var bools = new[]{false, false, false,false,false};
             var anys = bools.Select(x => new Any(x));
 
@@ -282,10 +288,10 @@ namespace Haskellable.SandBox
 
             var query6 =
                 Fn.New((int a) => a * 2)
-                .ToJoinable()
-                .Next(a => a.ToString())
-                .Next(int.Parse)
-                .Return(5);
+                .Join(a => a.ToString())
+                .Join(int.Parse)(5);
+
+
 
             var either = GetLeft();
 

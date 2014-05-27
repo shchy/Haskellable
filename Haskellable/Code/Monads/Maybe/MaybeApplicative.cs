@@ -25,10 +25,10 @@ namespace System
             }
             else
             {
-                return new Just<TValue>(@this);
+                return new Just<TValue>(()=>@this);
             }
         }
-        
+
         public static IMaybe<TValue> ToMaybeAs<TValue>(
             this object @this)
         {
