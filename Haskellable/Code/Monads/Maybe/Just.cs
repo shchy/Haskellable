@@ -9,14 +9,15 @@ namespace Haskellable.Code.Monads.Maybe
 {
     public class Just<T> : IMaybe<T>
     {
-        public T Value { get; private set; }
-        public Just(T value)
+        private Lazy<T> lazyValue;
+        public T Value { get { return this.lazyValue.Value; } }
+        public Just(Func<T> value)
         {
             if (value == null)
             {
                 throw new ArgumentNullException("just is not null");
             }
-            this.Value = value;
+            this.lazyValue = new Lazy<T>(value);
         }
 
         public override string ToString()
@@ -36,7 +37,7 @@ namespace Haskellable.Code.Monads.Maybe
 
         public IFunctor<TNew> FMap<TNew>(Func<T, TNew> selector)
         {
-            return new Just<TNew>(selector(this.Value));
+            return new Just<TNew>(() => selector(this.Value));
         }
     }
 }

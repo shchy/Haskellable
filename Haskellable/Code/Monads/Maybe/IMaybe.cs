@@ -1,4 +1,5 @@
 ﻿using Haskellable.Code.Functor;
+using Haskellable.Code.Monoid;
 using System;
 using System.Collections.Generic;
 using System.Linq;

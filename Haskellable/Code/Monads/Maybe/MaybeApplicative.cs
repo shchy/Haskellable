@@ -25,10 +25,10 @@ namespace System
             }
             else
             {
-                return new Just<TValue>(@this);
+                return new Just<TValue>(()=>@this);
             }
         }
-        
+
         public static IMaybe<TValue> ToMaybeAs<TValue>(
             this object @this)
         {
@@ -159,19 +159,6 @@ namespace System
         }
 
 
-        //public static Func<IMaybe<T2>, IMaybe<TReturn>> Apply<T1, T2, TReturn>(
-        //    this IMaybe<Func<T1, T2, TReturn>> @this
-        //    , IMaybe<T1> first)
-        //{
-        //    var selector = @this.Return((_, __) => default(TReturn));
-        //    return
-        //            Fn.New<IMaybe<T2>, IMaybe<TReturn>>(
-        //                (m2) =>
-        //                    from n1 in first
-        //                    from n2 in m2
-        //                    select selector(n1, n2));
-        //}
-
         public static TValue Return<TValue>(
             this IMaybe<TValue> @this
             , TValue defaultValue = default(TValue))
@@ -226,7 +213,5 @@ namespace System
 
             return @this;
         }
-
-    
     }
 }

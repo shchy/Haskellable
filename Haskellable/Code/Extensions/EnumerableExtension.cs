@@ -31,6 +31,17 @@ namespace System
                 .Select(resultSelector);
         }
 
+        
+        public static TResult Foldl<T, TResult>(this IEnumerable<T> @this, TResult acc, Func<TResult, T, TResult> func)
+        {
+            return @this.Aggregate( acc, func);
+        }
+
+        public static TResult Foldr<T, TResult>(this IEnumerable<T> @this, Func<T, TResult, TResult> func, TResult acc)
+        {
+            return @this.Reverse().Foldl(acc, (t, a) => func(a, t));
+        }
+
         public static IMaybe<T> FirstOrMaybe<T>(
             this IEnumerable<T> @this)
         {
@@ -45,5 +56,8 @@ namespace System
             return
                 @this.FirstOrDefault(predicate).ToMaybe();
         }
+
+
+
     }
 }
