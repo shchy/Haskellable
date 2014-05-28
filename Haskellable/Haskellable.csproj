@@ -44,7 +44,7 @@
     <Compile Include="Code\CaseOf\CaseOfExtension.cs" />
     <Compile Include="Code\Extensions\EnumerableExtension.cs" />
     <Compile Include="Code\Extensions\FuncFactory.cs" />
-    <Compile Include="Code\Functor\IApplicativeFunctor.cs" />
+    <Compile Include="Code\ApplicativeFunctor\IApplicativeFunctor.cs" />
     <Compile Include="Code\Functor\IFunctor.cs" />
     <Compile Include="Code\Guards\Guards.cs" />
     <Compile Include="Code\Guards\GuardsExtension.cs" />

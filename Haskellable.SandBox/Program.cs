@@ -292,7 +292,6 @@ namespace Haskellable.SandBox
                 .Join(int.Parse)(5);
 
 
-
             var either = GetLeft();
 
             either

@@ -20,15 +20,5 @@ namespace System
             return
                 Fn.New((TValue x) => selector(@this(x)));
         }
-
-        public static Func<T2,TReturn> Join<T1,T2,TReturn>(
-            this Func<T1,T2,TReturn> @this
-            , T1 t1)
-        {
-            return
-                Fn.New((T2 t2) => @this(t1, t2));
-        }
-
-
     }
 }
