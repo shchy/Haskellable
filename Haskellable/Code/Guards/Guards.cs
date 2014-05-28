@@ -1,12 +1,17 @@
 ﻿using Haskellable.Code.Monads.Maybe;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Haskellable.Code.Guards
 {
+
+#if !DEBUG
+        [DebuggerStepThrough]
+#endif
     public class GuardsSeed<TValue>
 	{
         private  TValue value;
@@ -31,6 +36,10 @@ namespace Haskellable.Code.Guards
         }
 	}
 
+
+#if !DEBUG
+        [DebuggerStepThrough]
+#endif
     public class Guards<TValue, TReturn>
     {
         private TValue tValue;

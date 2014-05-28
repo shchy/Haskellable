@@ -1,15 +1,21 @@
 ﻿using Haskellable.Code.Monads.Maybe;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Haskellable.Code.CaseOf
 {
+#if !DEBUG
+        [DebuggerStepThrough]
+#endif
     public class CaseOfSeed<TValue> 
 	{
         private TValue value;
+
+
         public CaseOfSeed(TValue value)
 	    {
             this.value = value;
@@ -23,10 +29,15 @@ namespace Haskellable.Code.CaseOf
         }
 	}
 
+
+#if !DEBUG
+        [DebuggerStepThrough]
+#endif
     public class CaseOf<TValue, TReturn> 
     {
         private TValue value;
         private IMaybe<TReturn> returnValue;
+
 
         public CaseOf(TValue value)
         {
