@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace System
 {
+
+#if !DEBUG
+        [DebuggerStepThrough]
+#endif
     public static class JoinExtension
     {
         public static Func<TValue,TNewReturn> Join<TValue,TReturn, TNewReturn>(

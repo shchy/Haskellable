@@ -2,12 +2,17 @@
 using Haskellable.Code.Monads.Either;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace System
 {
+
+#if !DEBUG
+        [DebuggerStepThrough]
+#endif
     public static class EitherApplicative
     {
         public static ILeft<T> ToLeft<T>(this T @this)
