@@ -87,6 +87,27 @@ namespace Haskellable.SandBox
     {
         static void Main(string[] args)
         {
+            var @mm1 =
+                from xs in Enumerable.Range(0, 10).ToMaybe()
+                let zs = Enumerable.Range(0, 2)
+                let m =
+                    from x in xs
+                    from z in zs
+                    select (x + z)
+                select m;
+
+            mm1.On(xs => 
+                xs.Select(x => 
+                { 
+                    Console.WriteLine(x); 
+                    return 0; 
+                }));
+
+
+
+
+
+
             var eitherTest =
                 from a in 1.ToRight<string, int>()
                 from b in "un".ToRight<string, string>()

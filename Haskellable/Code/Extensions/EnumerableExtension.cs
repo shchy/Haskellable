@@ -47,6 +47,14 @@ namespace System
             return @this.Reverse().Foldl(acc, (t, a) => func(a, t));
         }
 
+        public static void ForEach<T>(this IEnumerable<T> @this, Action<T> act)
+        {
+            foreach (var item in @this)
+            {
+                act(item);
+            }
+        }
+
         public static IMaybe<T> FirstOrMaybe<T>(
             this IEnumerable<T> @this)
         {
