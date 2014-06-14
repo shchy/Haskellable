@@ -67,33 +67,21 @@ namespace System
             return @this.Select(selector).SelectMany();
         }
 
-        public static IMaybe<TReturn> ApplyMaybe<T1, TReturn>(
-          this Func<T1, TReturn> func
-           , IMaybe<T1> f1)
-        {
-            return
-                f1.Select(func);
-        }
+        //public static IMaybe<TReturn> ApplyMaybe<T1, TReturn>(
+        //  this Func<T1, TReturn> func
+        //   , IMaybe<T1> f1)
+        //{
+        //    return
+        //        f1.Select(func);
+        //}
 
-        public static Func<IMaybe<T2>, IMaybe<TReturn>> ApplyMaybe<T1, T2, TReturn>(
-           this Func<T1, T2, TReturn> func
-            , IMaybe<T1> f1)
-        {
-            return
-                (IMaybe<T2> f2) =>
-                    f1.Select(t1 =>
-                    f2.Select(t2 =>
-                    func(t1, t2)))
-                    .SelectMany();
-        }
-
-        public static IMaybe<TReturn> ApplyMaybe<T2, TReturn>(
-           this Func<IMaybe<T2>, IMaybe<TReturn>> func
-            , IMaybe<T2> f2)
-        {
-            return
-                func(f2);
-        }
+        //public static IMaybe<TReturn> ApplyMaybe<T2, TReturn>(
+        //   this Func<IMaybe<T2>, IMaybe<TReturn>> func
+        //    , IMaybe<T2> f2)
+        //{
+        //    return
+        //        func(f2);
+        //}
 
         public static Func<IMaybe<T2>, IMaybe<TNew>> Apply<T1, T2, TNew>(
             this IMaybe<T1> @this
@@ -116,12 +104,6 @@ namespace System
             var second = @this.Select(maybeSelector).SelectMany();
             return apply(second);
         }
-        
-
-
-
-
-
 
         public static IMaybe<TValue> Where<TValue>(
             this IMaybe<TValue> @this

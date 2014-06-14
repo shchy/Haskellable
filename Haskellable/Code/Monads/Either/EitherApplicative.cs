@@ -75,17 +75,7 @@ namespace System
             return right.Value;
         }
 
-        public static IExceptionalEither<TValue> ToExceptional<TValue>(this Func<TValue> @this)
-        {
-            try
-            {
-                return new ExceptionalEitherRight<TValue>(@this());
-            }
-            catch (Exception ex)
-            {
-                return new ExceptionalEitherLeft<TValue>(ex);
-            }
-        }
+       
 
         public static CaseOf<object, TReturn> ToCaseOf<TLeft, TRight, TNewValue, TReturn>(
             this IEither<TLeft, TRight> @this, Func<TNewValue, TReturn> func)

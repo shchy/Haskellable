@@ -10,12 +10,10 @@ using Haskellable.Code.Monoid;
 using Haskellable.Code.Functor;
 using Haskellable.Code.Monads.State;
 
-
 namespace Haskellable.SandBox
 {
     class Program
     {
-
         static IState<int,short> GetRandom()
         {
             var s = StateApplicative.Get<int>();
@@ -47,8 +45,59 @@ namespace Haskellable.SandBox
                 s => Tuple.Create(new[]{v}.Concat(s), Unit.Value));
         }
 
+        //static IState<TError,TReturn> ERun<TReturn,TError>(Func<TReturn> func, TError err)
+        //{
+        //    var f = Fn.New((TError s) =>
+        //        {
+        //            var query =
+        //                from r in func.ToExceptional()
+        //                select Tuple.Create(s, r);
+        //            return query
+        //                .Return(() => Tuple.Create(err, default(TReturn)));
+        //        });
+        //    return new State<TError, TReturn>(f);
+        //}
+
+        static IEither<TError, TValue> ERun<TError, TValue>(Func<TValue> func, TError err)
+        {
+            var ei = func.ToExceptional();
+            return
+                ei.IsLeft
+                ? err.ToLeft().ToEither<TValue>()
+                : ei.Return(() => default(TValue)).ToRight().ToEither<TError>();
+        }
+
+        static string ToS(int v)
+        {
+            return v.ToString();
+        }
+
+        static int ToI(string v)
+        {
+            return int.Parse(v);
+        }
+
         static void Main(string[] args)
         {
+            var sss =
+                from s1 in Fn.New(() => ToS(12)).ToExceptional("Error01")
+                from s2 in Fn.New(() => { throw new Exception(); return 1; }).ToExceptional("Error02")
+                from s3 in Fn.New(() => ToI(s1)).ToExceptional("Error03")
+                select s3;
+
+            sss.OnLeft(ex => Console.WriteLine(ex.Message));
+            sss.OnRight(Console.WriteLine);
+
+
+            sss =
+                from s1 in Fn.New(() => ToS(12)).ToExceptional("Error01")
+                from s3 in Fn.New(() => ToI(s1)).ToExceptional("Error03")
+                select s3;
+
+            sss.OnLeft(Console.WriteLine);
+            sss.OnRight(Console.WriteLine);
+
+
             var state = GetRandom()
                         .SelectMany(
                         x => GetRandom()
@@ -78,27 +127,16 @@ namespace Haskellable.SandBox
 
 
 
-            var @mm1 =
-               from xs in Enumerable.Range(0, 10).ToMaybe()
-               let zs = Enumerable.Range(0, 2)
-               let m =
-                   from x in xs
-                   from z in zs
-                   select (x + z)
-               select m;
 
-            mm1.On(xs => 
-                xs.Select(x => 
-                { 
-                    Console.WriteLine(x); 
-                    return 0; 
-                }));
+
+
+
+
 
             var eitherTest =
                 from a in 1.ToRight<string, int>()
                 from b in "un".ToRight<string, string>()
                 select DateTime.Now;
-
 
             var bai = Fn.New((int x) => x * 2);
             var bai3 = bai
@@ -133,25 +171,7 @@ namespace Haskellable.SandBox
                 where a.suji < 10
                 select a;
 
-            var a2 =
-                ano.suji
-                .ToCaseOf()
-                .Match((int x) => x)
-                .Match((string x) => 0)
-                .Return(_ => int.MaxValue);
-
-            var a3 =
-                ano
-                .ToGuards()
-                .Where(a => new { a.suji, a.moji, other = a.suji + a.moji })
-                .When(
-                    a => char.IsWhiteSpace(a.moji)
-                    , a => '*')
-                .When(
-                    a => a.suji == 0
-                    , a => '8')
-                .Return(a => (char)a.other);
-
+            
             var a4 =
                 ano
                 .ToLeft()
@@ -208,23 +228,8 @@ namespace Haskellable.SandBox
                 a10.Concat(a11).FirstOrDefault();
 
 
-            var a13Exists =
-                Fn.New<IMaybe<int>, Func<int, bool>, IMaybe<bool>>((m, predicate) => MaybeFunctor.Select(m, x => predicate(x)));
-
-            var a14 =
-                Fn.New((int x) => x.ToString()).ApplyMaybe(5.ToMaybe());
-
-            var mf = Fn.New((int x, int y) => (x + y).ToString())
-                        .ApplyMaybe(1.ToMaybe())
-                        .ApplyMaybe(4.ToMaybe());
-
-            var a16 = Fn.New<int, int, int>((x, y) => x + y);
-            var a17 = a16.ApplyMaybe( 5.ToMaybe());
-            var a18 = a17.ApplyMaybe( 6.ToMaybe());
-            var a19 = a18
-                        .Apply((int x, string y) => x + y)
-                        .ApplyMaybe("unko".ToMaybe());
-
+            
+           
             var a20 =
                 from a in ano.ToMaybe()
                 from b in a.moji.ToMaybe()
@@ -268,20 +273,6 @@ namespace Haskellable.SandBox
                 .Or(() => Console.WriteLine("none"));
             Console.WriteLine(query3);
 
-
-            var query4 =
-                10.ToGuards()
-                .Where(a=> new{ moji = a.ToString(), suji = a })
-                .When(a =>  a.suji < 5, _ => "unko")
-                .When(a => a.suji < 6, a => (a.suji * 2).ToString())
-                .Return(_ => "otherwise");
-
-            var query5 =
-                "".ToCaseOf()
-                .Match((MyClass a) => a.Int)
-                .Match((int a) => a)
-                .Return(_ => 99);
-
             var array = new[] { 9, 8, 7, 6, 5, 4, 3, 2, 1 };
             var aaa = array.ToHeadTailList()
                         .Recursion(
@@ -297,7 +288,6 @@ namespace Haskellable.SandBox
                 Fn.New((int a) => a * 2)
                 .Join(a => a.ToString())
                 .Join(int.Parse)(5);
-
 
             var either = GetLeft();
 
@@ -319,24 +309,16 @@ namespace Haskellable.SandBox
                 .Return(() => Console.WriteLine("error"));
             query7();
 
-            Console.WriteLine(query4);
-
-
             var doubleMe = Fn.New((double x) => x.ToGuards()
                                                 .Where(a => new { dbl = a * 2, a })
                                                 .When(a => a.dbl > 100, _ => 100.0)
                                                 .Return(a => a.dbl));
-
-            
 
             var sa = "sasa";
             var queryASsdas =
                 from r1 in Fn.New(() => Test01(sa)).ToExceptional()
                 from r2 in Fn.New(() => Test02(r1)).ToExceptional()
                 select r1 + r2;
-
-
-
 
             Console.ReadLine();
         }
