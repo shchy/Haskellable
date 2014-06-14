@@ -7,94 +7,85 @@ using System.Text;
 using System.Threading.Tasks;
 using Haskellable.Code.Monads.Maybe;
 using Haskellable.Code.Monoid;
+using Haskellable.Code.Functor;
+using Haskellable.Code.Monads.State;
 
 
 namespace Haskellable.SandBox
 {
-
-    public class Any : Monoid<bool>
-    {
-        public Any(bool v) : base(v)
-        {
-
-        }
-
-        public override IMonoid<Monoid<bool>, bool> Empty()
-        {
-            return new Any(false);
-        }
-
-        public override IMonoid<Monoid<bool>, bool> Append(IMonoid<Monoid<bool>, bool> item)
-        {
-            return new Any( this.Value || item.Value );
-        }
-    }
-
-    class First<T> : Monoid<IMaybe<T>>
-    {
-        public First() : base()
-        {
-        }
-
-        public First(IMaybe<T> v) : base(v)
-        {
-        }
-
-        public override IMonoid<Monoid<IMaybe<T>>, IMaybe<T>> Empty()
-        {
-            return new First<T>(new Nothing<T>());
-        }
-
-        public override IMonoid<Monoid<IMaybe<T>>, IMaybe<T>> Append(IMonoid<Monoid<IMaybe<T>>, IMaybe<T>> item)
-        {
-            return
-                new First<T>(this.Value.Concat(item.Value).FirstOrMaybe());
-        }
-    }
-
-    class Lope : Monoid<IMaybe<Tuple<int,int>>>
-    {
-        public Lope() : base()
-        {
-        }
-
-        public Lope(IMaybe<Tuple<int,int>> v) : base(v)
-        {
-        }
-
-        public override IMonoid<Monoid<IMaybe<Tuple<int, int>>>, IMaybe<Tuple<int, int>>> Empty()
-        {
-            return new Lope(new Nothing<Tuple<int, int>>());
-        }
-
-        public override IMonoid<Monoid<IMaybe<Tuple<int, int>>>, IMaybe<Tuple<int, int>>> Append(IMonoid<Monoid<IMaybe<Tuple<int, int>>>, IMaybe<Tuple<int, int>>> item)
-        {
-            var query =
-                from x in this.Value
-                from y in item.Value
-                let l = Tuple.Create(x.Item1 + y.Item1, x.Item2 + y.Item2)
-                where Math.Abs(l.Item1 - l.Item2) < 5
-                select l;
-            return new Lope(query);
-        }
-    }
-
-
-
-
-
     class Program
     {
+
+        static IState<int,short> GetRandom()
+        {
+            var s = StateApplicative.Get<int>();
+            return s.SelectMany(x =>
+            {
+                var rand = NextShort(x);
+                var setState = StateApplicative.Put(rand.Item2);
+                return setState.SelectMany(_ =>
+                    new State<int, short>(
+                        a => Tuple.Create(rand.Item2, rand.Item1))
+                );
+            });
+        }
+
+        private static Tuple<short,int> NextShort(int seed)
+        {
+            return Tuple.Create((short)++seed, seed);
+        }
+
+        static IState<IEnumerable<int>, int> Pop()
+        {
+            return new State<IEnumerable<int>, int>(
+                    s => Tuple.Create(s.Skip(1),s.First()));
+        }
+
+        static IState<IEnumerable<int>, Unit> Push(int v)
+        {
+            return new State<IEnumerable<int>, Unit>(
+                s => Tuple.Create(new[]{v}.Concat(s), Unit.Value));
+        }
+
         static void Main(string[] args)
         {
+            var state = GetRandom()
+                        .SelectMany(
+                        x => GetRandom()
+                        .SelectMany(
+                        y => GetRandom()
+                        .SelectMany(
+                        z => (x + y + z).ToState<int, int>())));
+
+            var res = state.Run(0);
+
+            var stateQuery =
+                from x in GetRandom()
+                from y in GetRandom()
+                from z in GetRandom()
+                select x + y + z;
+
+            var aaaa = stateQuery.Run(99);
+           
+            var stack =
+                from s1 in Push(1)
+                from s2 in Push(5)
+                from s3 in Pop()
+                from s4 in StateApplicative.Get<IEnumerable<int>>() 
+                select s3;
+
+            var stackRes = stack.Run(Enumerable.Empty<int>());
+
+
+
             var @mm1 =
-                from xs in Enumerable.Range(0, 10).ToMaybe()
-                let zs = Enumerable.Range(0, 2)
-                let m =
-                    from x in xs
-                    from z in zs
-                    select (x + z)
-                select m;
+               from xs in Enumerable.Range(0, 10).ToMaybe()
+               let zs = Enumerable.Range(0, 2)
+               let m =
+                   from x in xs
+                   from z in zs
+                   select (x + z)
+               select m;
 
             mm1.On(xs => 
                 xs.Select(x => 
@@ -102,11 +93,6 @@ namespace Haskellable.SandBox
                     Console.WriteLine(x); 
                     return 0; 
                 }));
-
-
-
-
-
 
             var eitherTest =
                 from a in 1.ToRight<string, int>()
@@ -341,8 +327,29 @@ namespace Haskellable.SandBox
                                                 .When(a => a.dbl > 100, _ => 100.0)
                                                 .Return(a => a.dbl));
 
+            
+
+            var sa = "sasa";
+            var queryASsdas =
+                from r1 in Fn.New(() => Test01(sa)).ToExceptional()
+                from r2 in Fn.New(() => Test02(r1)).ToExceptional()
+                select r1 + r2;
+
+
+
 
             Console.ReadLine();
+        }
+
+
+        static int Test01(string suji)
+        {
+            return int.Parse(suji);
+        }
+
+        static string Test02(int suti)
+        {
+            return suti.ToString();
         }
 
         private static IEither<int, string> GetRight()
@@ -362,4 +369,79 @@ namespace Haskellable.SandBox
         public int Int { get; set; }
         public string Moji { get; set; }
     }
+
+
+    public class Any : Monoid<bool>
+    {
+        public Any(bool v)
+            : base(v)
+        {
+
+        }
+
+        public override IMonoid<Monoid<bool>, bool> Empty()
+        {
+            return new Any(false);
+        }
+
+        public override IMonoid<Monoid<bool>, bool> Append(IMonoid<Monoid<bool>, bool> item)
+        {
+            return new Any(this.Value || item.Value);
+        }
+    }
+
+    class First<T> : Monoid<IMaybe<T>>
+    {
+        public First()
+            : base()
+        {
+        }
+
+        public First(IMaybe<T> v)
+            : base(v)
+        {
+        }
+
+        public override IMonoid<Monoid<IMaybe<T>>, IMaybe<T>> Empty()
+        {
+            return new First<T>(new Nothing<T>());
+        }
+
+        public override IMonoid<Monoid<IMaybe<T>>, IMaybe<T>> Append(IMonoid<Monoid<IMaybe<T>>, IMaybe<T>> item)
+        {
+            return
+                new First<T>(this.Value.Concat(item.Value).FirstOrMaybe());
+        }
+    }
+
+    class Lope : Monoid<IMaybe<Tuple<int, int>>>
+    {
+        public Lope()
+            : base()
+        {
+        }
+
+        public Lope(IMaybe<Tuple<int, int>> v)
+            : base(v)
+        {
+        }
+
+        public override IMonoid<Monoid<IMaybe<Tuple<int, int>>>, IMaybe<Tuple<int, int>>> Empty()
+        {
+            return new Lope(new Nothing<Tuple<int, int>>());
+        }
+
+        public override IMonoid<Monoid<IMaybe<Tuple<int, int>>>, IMaybe<Tuple<int, int>>> Append(IMonoid<Monoid<IMaybe<Tuple<int, int>>>, IMaybe<Tuple<int, int>>> item)
+        {
+            var query =
+                from x in this.Value
+                from y in item.Value
+                let l = Tuple.Create(x.Item1 + y.Item1, x.Item2 + y.Item2)
+                where Math.Abs(l.Item1 - l.Item2) < 5
+                select l;
+            return new Lope(query);
+        }
+    }
+
+
 }
