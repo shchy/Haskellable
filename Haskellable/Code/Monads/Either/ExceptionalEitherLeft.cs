@@ -9,8 +9,9 @@ namespace Haskellable.Code.Monads.Either
 {
 
 #if !DEBUG
-        [DebuggerStepThrough]
+    [DebuggerStepThrough]
 #endif
+
     public class ExceptionalEitherLeft<TValue>
         : EitherLeft<Exception, TValue>
         , IExceptionalEither<TValue>

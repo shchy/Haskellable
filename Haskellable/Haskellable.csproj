@@ -69,6 +69,10 @@
     <Compile Include="Code\Monads\Maybe\MaybeApplicative.cs" />
     <Compile Include="Code\Monads\Maybe\MaybeFunctor.cs" />
     <Compile Include="Code\Monads\Maybe\Nothing.cs" />
+    <Compile Include="Code\Monads\State\IState.cs" />
+    <Compile Include="Code\Monads\State\State.cs" />
+    <Compile Include="Code\Monads\State\StateApplicative.cs" />
+    <Compile Include="Code\Monads\State\StateFunctor.cs" />
     <Compile Include="Code\Monoid\IMonoid.cs" />
     <Compile Include="Code\Monoid\Monoid.cs" />
     <Compile Include="Code\Monoid\MonoidExtension.cs" />
