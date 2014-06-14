@@ -55,6 +55,23 @@ namespace System
             }
         }
 
+        public static void ForEach<T>(this IEnumerable<IMaybe<T>> @this, Action<T> act)
+        {
+            foreach (var item in @this)
+            {
+                item.On(act);
+            }
+        }
+
+        public static void ForEach<T1,T2>(this IEnumerable<Tuple<T1,T2>> @this, Action<T1,T2> act)
+        {
+            foreach (var item in @this)
+            {   
+                act(item.Item1, item.Item2);
+            }
+        }
+
+
         public static IMaybe<T> FirstOrMaybe<T>(
             this IEnumerable<T> @this)
         {
@@ -69,8 +86,5 @@ namespace System
             return
                 @this.FirstOrDefault(predicate).ToMaybe();
         }
-
-
-
     }
 }

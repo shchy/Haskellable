@@ -48,8 +48,7 @@ namespace Haskellable.Code.CaseOf
         public CaseOf<TValue, TReturn> Match<TNewValue>(Func<TNewValue, TReturn> selector)
         {
             this.returnValue
-                .Or(
-                () =>
+                .Or(() =>
                 {
                     this.value.ToMaybeAs<TNewValue>()
                         .On(
