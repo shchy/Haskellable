@@ -16,12 +16,6 @@ namespace System
     public static class MaybeApplicative
     {
         public static IMaybe<TValue> ToMaybe<TValue>(
-            this IMaybe<TValue> @this)
-        {
-            return @this;
-        }
-
-        public static IMaybe<TValue> ToMaybe<TValue>(
             this TValue @this)
         {
             if (@this == null)
@@ -32,6 +26,12 @@ namespace System
             {
                 return new Just<TValue>(()=>@this);
             }
+        }
+        
+        public static IMaybe<TValue> ToMaybe<TValue>(
+            this IMaybe<TValue> @this)
+        {
+            return @this;
         }
 
         public static IMaybe<TValue> ToMaybeAs<TValue>(
@@ -46,6 +46,8 @@ namespace System
                 return new Nothing<TValue>();
             }
         }
+
+
 
         public static IMaybe<TValue> SelectMany<TValue>(
             this IMaybe<IMaybe<TValue>> @this)
@@ -66,22 +68,6 @@ namespace System
         {
             return @this.Select(selector).SelectMany();
         }
-
-        //public static IMaybe<TReturn> ApplyMaybe<T1, TReturn>(
-        //  this Func<T1, TReturn> func
-        //   , IMaybe<T1> f1)
-        //{
-        //    return
-        //        f1.Select(func);
-        //}
-
-        //public static IMaybe<TReturn> ApplyMaybe<T2, TReturn>(
-        //   this Func<IMaybe<T2>, IMaybe<TReturn>> func
-        //    , IMaybe<T2> f2)
-        //{
-        //    return
-        //        func(f2);
-        //}
 
         public static Func<IMaybe<T2>, IMaybe<TNew>> Apply<T1, T2, TNew>(
             this IMaybe<T1> @this
