@@ -89,6 +89,9 @@ namespace Haskellable.SandBox
             sss.OnRight(Console.WriteLine);
 
 
+            Enumerable.Empty<int>().Concat(9).Concat(7).Concat(6.ToMaybe());
+            
+
             sss =
                 from s1 in Fn.New(() => ToS(12)).ToExceptional("Error01")
                 from s3 in Fn.New(() => ToI(s1)).ToExceptional("Error03")
