@@ -86,5 +86,15 @@ namespace System
             return
                 @this.FirstOrDefault(predicate).ToMaybe();
         }
+
+
+        public static IEnumerable<T> Concat<T>(this IEnumerable<T> @this, T last)
+        {
+            foreach (var item in @this)
+            {
+                yield return item;
+            }
+            yield return last;
+        }
     }
 }
