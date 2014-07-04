@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
+#if NET35
+using Haskellable.NET35;
+#endif
 
 namespace Haskellable.Code.Monads.Maybe
 {

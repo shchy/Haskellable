@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haskellable", "Haskellable\Haskellable.csproj", "{A8E56399-C55D-486C-B6A9-B15F82FF3F70}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haskellable.SandBox", "Haskellable.SandBox\Haskellable.SandBox.csproj", "{E72C6030-B080-47E0-BCAB-5A682F381A5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haskellable.Test", "Haskellable.Test\Haskellable.Test.csproj", "{955A8038-E99A-42B0-B64A-E36F31926DBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haskellable.NET35", "Haskellable.NET35\Haskellable.NET35.csproj", "{074C0058-FC97-4F85-A6AE-1E12C9404674}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{955A8038-E99A-42B0-B64A-E36F31926DBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{955A8038-E99A-42B0-B64A-E36F31926DBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{955A8038-E99A-42B0-B64A-E36F31926DBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{074C0058-FC97-4F85-A6AE-1E12C9404674}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{074C0058-FC97-4F85-A6AE-1E12C9404674}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{074C0058-FC97-4F85-A6AE-1E12C9404674}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{074C0058-FC97-4F85-A6AE-1E12C9404674}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

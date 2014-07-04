@@ -1,11 +1,13 @@
-﻿using Haskellable.Code.Monads.HeadTailList;
-using Haskellable.Code.Monads.Maybe;
+﻿using Haskellable.Code.Monads.Maybe;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
+#if NET35
+using Haskellable.NET35;
+#endif
 
 namespace System
 {
@@ -24,9 +26,9 @@ namespace System
         {
             var context = acc;
             return
-                @this.ToHeadTailList()
+                @this
                 .Recursion(
-                    Enumerable.Empty<TAccumulate>()
+                    () => Enumerable.Empty<TAccumulate>()
                     , x =>
                     {
                         context = func(context, x);
@@ -34,6 +36,24 @@ namespace System
                     }
                     , (head, tailResult) => head.Concat(tailResult))
                 .Select(resultSelector);
+        }
+
+        public static TResult Recursion<T, TResult>(
+            this IEnumerable<T> @this
+            , Func<TResult> emptySelector
+            , Func<T, TResult> selector
+            , Func<TResult, TResult, TResult> merge)
+        {
+            if (@this.Any() == false)
+            {
+                return emptySelector();
+            }
+            else
+            {
+                return merge(
+                            selector(@this.First())
+                            , @this.Skip(1).Recursion(emptySelector, selector, merge));
+            }
         }
 
         

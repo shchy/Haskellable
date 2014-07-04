@@ -49,11 +49,6 @@
     <Compile Include="Code\Guards\Guards.cs" />
     <Compile Include="Code\Guards\GuardsExtension.cs" />
     <Compile Include="Code\Monads\ExceptionalEither\ExceptionalEitherApplicative.cs" />
-    <Compile Include="Code\Monads\HeadTailList\EmptyList.cs" />
-    <Compile Include="Code\Monads\HeadTailList\HeadTailList.cs" />
-    <Compile Include="Code\Monads\HeadTailList\HeadTailListExtension.cs" />
-    <Compile Include="Code\Monads\HeadTailList\IHeadTailList.cs" />
-    <Compile Include="Code\Monads\HeadTailList\SingleList.cs" />
     <Compile Include="Code\Extensions\JoinExtension.cs" />
     <Compile Include="Code\Monads\Either\EitherApplicative.cs" />
     <Compile Include="Code\Monads\Either\EitherFunctor.cs" />
@@ -77,6 +72,8 @@
     <Compile Include="Code\Monoid\IMonoid.cs" />
     <Compile Include="Code\Monoid\Monoid.cs" />
     <Compile Include="Code\Monoid\MonoidExtension.cs" />
+    <Compile Include="Code\NET35\Lazy.cs" />
+    <Compile Include="Code\NET35\Tuple.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

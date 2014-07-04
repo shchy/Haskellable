@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Haskellable</id>
+    <version>0.0.0.13</version>
+    <title>Haskellable</title>
+    <authors>shch</authors>
+    <owners>shch</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Haskellっぽくなーれ</description>
+    <copyright>Copyright ©  2014</copyright>
+    <dependencies />
+  </metadata>
+  <files>
+        <file src="Haskellable\bin\Release\Haskellable.dll" target="lib\net40-Client\Haskellable.dll" />
+         <file src="Haskellable.NET35\bin\Release\Haskellable.NET35.dll" target="lib\net35-Client\Haskellable.NET35.dll" />
+    </files>
+</package>

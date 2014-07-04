@@ -1,5 +1,4 @@
-﻿using Haskellable.Code.Monads.HeadTailList;
-using Haskellable.Code.Monads.Either;
+﻿using Haskellable.Code.Monads.Either;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -277,9 +276,9 @@ namespace Haskellable.SandBox
             Console.WriteLine(query3);
 
             var array = new[] { 9, 8, 7, 6, 5, 4, 3, 2, 1 };
-            var aaa = array.ToHeadTailList()
+            var aaa = array
                         .Recursion(
-                            0
+                            ()=> 0
                             , x => x
                             , (a, b) => a + b);
 
