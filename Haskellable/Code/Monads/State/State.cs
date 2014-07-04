@@ -33,9 +33,7 @@ namespace Haskellable.Code.Monads.State
         public static readonly Unit Value = new Unit();
         private Unit()
         {
-
         }
-        
     }
 }
 
