@@ -92,21 +92,24 @@ namespace System
         }
 
 
-        public static IMaybe<T> FirstOrMaybe<T>(
+        public static IMaybe<T> FirstOrNothing<T>(
             this IEnumerable<T> @this)
         {
             return
-                @this.FirstOrDefault().ToMaybe();
+                from m in @this.ToMaybe()
+                where m.Any()
+                select m.First();
         }
 
-        public static IMaybe<T> FirstOrMaybe<T>
+        public static IMaybe<T> FirstOrNothing<T>
             (this IEnumerable<T> @this
             , Func<T,bool> predicate)
         {
             return
-                @this.FirstOrDefault(predicate).ToMaybe();
+                from m in @this.ToMaybe()
+                where m.Any(predicate)
+                select m.First(predicate);
         }
-
 
         public static IEnumerable<T> Concat<T>(this IEnumerable<T> @this, T last)
         {
