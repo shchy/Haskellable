@@ -44,19 +44,6 @@ namespace Haskellable.SandBox
                 s => Tuple.Create(new[]{v}.Concat(s), Unit.Value));
         }
 
-        //static IState<TError,TReturn> ERun<TReturn,TError>(Func<TReturn> func, TError err)
-        //{
-        //    var f = Fn.New((TError s) =>
-        //        {
-        //            var query =
-        //                from r in func.ToExceptional()
-        //                select Tuple.Create(s, r);
-        //            return query
-        //                .Return(() => Tuple.Create(err, default(TReturn)));
-        //        });
-        //    return new State<TError, TReturn>(f);
-        //}
-
         static IEither<TError, TValue> ERun<TError, TValue>(Func<TValue> func, TError err)
         {
             var ei = func.ToExceptional();
@@ -87,10 +74,12 @@ namespace Haskellable.SandBox
             sss.OnLeft(ex => Console.WriteLine(ex.Message));
             sss.OnRight(Console.WriteLine);
 
-
-            Enumerable.Empty<int>().Concat(9).Concat(7).Concat(6.ToMaybe());
+            Enumerable
+                .Empty<int>()
+                .Concat(9)
+                .Concat(7)
+                .Concat(6.ToMaybe());
             
-
             sss =
                 from s1 in Fn.New(() => ToS(12)).ToExceptional("Error01")
                 from s3 in Fn.New(() => ToI(s1)).ToExceptional("Error03")
@@ -394,7 +383,7 @@ namespace Haskellable.SandBox
         public override IMonoid<Monoid<IMaybe<T>>, IMaybe<T>> Append(IMonoid<Monoid<IMaybe<T>>, IMaybe<T>> item)
         {
             return
-                new First<T>(this.Value.Concat(item.Value).FirstOrMaybe());
+                new First<T>(this.Value.Concat(item.Value).FirstOrNothing());
         }
     }
 
