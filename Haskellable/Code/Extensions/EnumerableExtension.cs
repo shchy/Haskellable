@@ -119,5 +119,35 @@ namespace System
             }
             yield return last;
         }
+
+        public static IEnumerable<IMaybe<TResult>> SelectMany<TSource, TSelected, TResult>(
+            this IEnumerable<TSource> @this,
+            Func<TSource, IMaybe<TSelected>> maybeSelector,
+            Func<TSource, TSelected, TResult> resultSelector)
+        {
+            return
+                @this.Select(x => 
+                    {
+                        var m = maybeSelector(x);
+                        var apply = Fn.New((TSelected _) => resultSelector(x, _));
+                        return m.Select(apply);
+                    });
+        }
+
+        public static IEnumerable<IMaybe<TResult>> Select<T, TResult>(
+            this IEnumerable<IMaybe<T>> @this
+            , Func<T, TResult> selector)
+        {
+            return @this.Select(m => m.Select(selector));
+        }
+
+        public static IEnumerable<IMaybe<T>> Where<T>(
+            this IEnumerable<IMaybe<T>> @this
+            , Func<T, bool> predicate)
+        {
+            return
+                from x in @this
+                select MaybeApplicative.Where(x, predicate);
+        }
     }
 }

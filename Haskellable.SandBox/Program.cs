@@ -65,6 +65,16 @@ namespace Haskellable.SandBox
 
         static void Main(string[] args)
         {
+            var listWithMaybe =
+                from x in new[] { 1, 2, 3, 4, 5 }
+                from m in x.ToMaybe()
+                where m < 3
+                let y = x * 2
+                where y < 5
+                select m;
+
+            listWithMaybe.ForEach(m => m.On(Console.WriteLine));
+
             var sss =
                 from s1 in Fn.New(() => ToS(12)).ToExceptional("Error01")
                 from s2 in Fn.New(() => { throw new Exception(); return 1; }).ToExceptional("Error02")
