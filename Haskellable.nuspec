@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Haskellable</id>
-    <version>0.0.0.16</version>
+    <version>0.0.0.17</version>
     <title>Haskellable</title>
     <authors>shch</authors>
     <owners>shch</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>HaskellのMaybeを使いたい</description>
+    <description>Maybeを使いたい</description>
     <copyright>Copyright ©  2014</copyright>
     <dependencies />
   </metadata>

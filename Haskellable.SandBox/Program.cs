@@ -65,6 +65,14 @@ namespace Haskellable.SandBox
 
         static void Main(string[] args)
         {
+            var g =
+                0.ToGuards()
+                .When(0, '0')
+                .When(1, '1')
+                .Return('x');
+            Console.WriteLine(g);
+
+
             var listWithMaybe =
                 from x in new[] { 1, 2, 3, 4, 5 }
                 from m in x.ToMaybe()
@@ -314,6 +322,10 @@ namespace Haskellable.SandBox
                                                 .Where(a => new { dbl = a * 2, a })
                                                 .When(a => a.dbl > 100, _ => 100.0)
                                                 .Return(a => a.dbl));
+
+            Console.WriteLine(doubleMe(2));
+            Console.WriteLine(doubleMe(100));
+            Console.WriteLine(doubleMe(101));
 
             var sa = "sasa";
             var queryASsdas =
