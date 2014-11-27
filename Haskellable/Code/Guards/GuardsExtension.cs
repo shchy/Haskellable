@@ -56,6 +56,24 @@ namespace System
                 @this.When(v => v.Equals(whenValue), _ => returnValue);
         }
 
+        public static Guards<TValue, TReturn> When<TValue, TReturn>(
+            this GuardsSeed<TValue> @this
+            , Func<TValue,bool> when
+            , TReturn returnValue)
+        {
+            return
+                @this.When(when, _ => returnValue);
+        }
+
+        public static Guards<TValue, TReturn> When<TValue, TReturn>(
+            this Guards<TValue, TReturn> @this
+            , Func<TValue, bool> when
+          , TReturn returnValue)
+        {
+            return
+                @this.When(when, _ => returnValue);
+        }
+
         public static TReturn Return<TValue, TReturn>(
             this Guards<TValue, TReturn> @this
             , TReturn returnValue)

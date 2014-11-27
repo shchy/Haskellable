@@ -2,13 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Haskellable</id>
-    <version>0.0.0.17</version>
-    <title>Haskellable</title>
+    <version>1.0.0.0</version>
     <authors>shch</authors>
     <owners>shch</owners>
+    <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
+    <projectUrl>https://github.com/shchy/Haskellable</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Maybeを使いたい</description>
-    <copyright>Copyright ©  2014</copyright>
+    <description>want to use Maybe</description>
+    <copyright>Copyright 2014</copyright>
     <dependencies />
   </metadata>
   <files>
