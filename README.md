@@ -14,7 +14,7 @@ query.On(Console.WriteLine);
 query.Or(()=>Console.WriteLine("Nothing"));
 var safeValue = query.Return(0);
 
-if (query.IsSomeThing)
+if (query.IsSomething)
 {
   Console.WriteLine("Something");
 }
