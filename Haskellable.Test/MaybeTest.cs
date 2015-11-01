@@ -72,6 +72,21 @@ namespace Haskellable.Test
         }
 
 
+        [TestMethod]
+        public void MaybeNullable()
+        {
+            int? test = 0;
+            var mTest = test.ToMaybe();
+            Assert.AreEqual(true, mTest.IsSomething);
+            Assert.AreEqual(false, mTest.IsNothing);
+
+            int? testNull = null;
+            var mTestNull = testNull.ToMaybe();
+            Assert.AreEqual(false, mTestNull.IsSomething);
+            Assert.AreEqual(true, mTestNull.IsNothing);
+
+
+        }
 
 
 
