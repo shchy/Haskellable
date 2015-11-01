@@ -22,11 +22,11 @@ if (query.IsSomething)
 ```
 
 
-
 Nuget
 --------
 ```
 PM> Install-Package Haskellable
 ```
 https://www.nuget.org/packages/Haskellable/
+
 
