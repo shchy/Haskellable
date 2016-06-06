@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Haskellable</id>
-    <version>1.0.0.4</version>
+    <version>1.0.0.5</version>
     <authors>shch</authors>
     <owners>shch</owners>
     <licenseUrl>http://opensource.org/licenses/mit-license.php</licenseUrl>
@@ -13,8 +13,9 @@
     <dependencies />
   </metadata>
   <files>
-        <file src="Haskellable\bin\Release\Haskellable.dll" target="lib\net40\" />
-        <file src="Haskellable\bin\Release\Haskellable.dll" target="lib\dotnet\" />
-        <file src="Haskellable.NET35\bin\Release\Haskellable.NET35.dll" target="lib\net35-Client\Haskellable.NET35.dll" />
-    </files>
+      <file src="Haskellable\bin\Release\Haskellable.dll" target="lib\net40\" />
+      <file src="Haskellable\bin\Release\Haskellable.dll" target="lib\dotnet\" />
+      <file src="Haskellable\bin\Release\Haskellable.dll" target="lib\portable-net4+sl4+wp8+win8+wpa81+MonoAndroid16+MonoTouch40\" />
+      <file src="Haskellable.NET35\bin\Release\Haskellable.NET35.dll" target="lib\net35-Client\Haskellable.NET35.dll" />
+  </files>
 </package>
